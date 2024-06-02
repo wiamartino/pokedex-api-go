@@ -114,3 +114,20 @@ func (h *PokemonHandler) SearchByName(c *fiber.Ctx) error {
 	}
 	return c.JSON(pokemon)
 }
+
+func (h *PokemonHandler) GetRandomPokemon(c *fiber.Ctx) error {
+	pokemon, err := h.Repo.GetRandomPokemon()
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Database error", "detail": err.Error()})
+	}
+	return c.JSON(pokemon)
+}
+
+func (h *PokemonHandler) GetPokemonsByAbility(c *fiber.Ctx) error {
+	ability := c.Params("ability")
+	pokemons, err := h.Repo.GetPokemonsByAbility(ability)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Database error", "detail": err.Error()})
+	}
+	return c.JSON(pokemons)
+}

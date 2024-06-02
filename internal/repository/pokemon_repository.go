@@ -49,3 +49,19 @@ func (r *PokemonRepository) SearchByName(name string) (*model.Pokemon, error) {
 	}
 	return &pokemon, nil
 }
+
+func (r *PokemonRepository) GetPokemonsByAbility(abilityName string) ([]model.Pokemon, error) {
+	var pokemons []model.Pokemon
+	if err := r.DB.Joins("Abilities").Where("abilities.name = ?", abilityName).Find(&pokemons).Error; err != nil {
+		return nil, err
+	}
+	return pokemons, nil
+}
+
+func (r *PokemonRepository) GetRandomPokemon() (*model.Pokemon, error) {
+	var pokemon model.Pokemon
+	if err := r.DB.Order("RANDOM()").First(&pokemon).Error; err != nil {
+		return nil, err
+	}
+	return &pokemon, nil
+}
