@@ -19,16 +19,3 @@ type Pokemon struct {
 	Abilities   []Ability `gorm:"many2many:pokemon_abilities;"`
 	Moves       []Move    `gorm:"many2many:pokemon_moves;"`
 }
-
-type Ability struct {
-	gorm.Model
-	Name string `gorm:"type:varchar(100);not null"`
-}
-
-type Move struct {
-	gorm.Model
-	Name     string `gorm:"type:varchar(100);not null"`
-	Power    int
-	Type     string    `gorm:"type:varchar(100);not null"`
-	Pokemons []Pokemon `gorm:"many2many:pokemon_moves;"`
-}

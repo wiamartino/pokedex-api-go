@@ -41,3 +41,11 @@ func (r *PokemonRepository) Update(pokemon *model.Pokemon) error {
 func (r *PokemonRepository) Delete(pokemon *model.Pokemon) error {
 	return r.DB.Delete(pokemon).Error
 }
+
+func (r *PokemonRepository) SearchByName(name string) (*model.Pokemon, error) {
+	var pokemon model.Pokemon
+	if err := r.DB.Where("name = ?", name).First(&pokemon).Error; err != nil {
+		return nil, err
+	}
+	return &pokemon, nil
+}

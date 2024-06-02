@@ -101,3 +101,16 @@ func (h *PokemonHandler) DeletePokemon(c *fiber.Ctx) error {
 	}
 	return c.SendStatus(fiber.StatusNoContent)
 }
+
+func (h *PokemonHandler) SearchByName(c *fiber.Ctx) error {
+	name := c.Params("name")
+	pokemon, err := h.Repo.SearchByName(name)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Pokemon not found"})
+		} else {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Database error", "detail": err.Error()})
+		}
+	}
+	return c.JSON(pokemon)
+}
