@@ -18,4 +18,5 @@ type Pokemon struct {
 	Evolution   string
 	Abilities   []Ability `gorm:"many2many:pokemon_abilities;"`
 	Moves       []Move    `gorm:"many2many:pokemon_moves;"`
+	Generation  int
 }
