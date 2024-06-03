@@ -6,9 +6,9 @@ import (
 
 type Pokemon struct {
 	gorm.Model
-	Name        string `gorm:"type:varchar(100);not null"`
-	Type        string `gorm:"type:varchar(100);not null"`
-	Description string `gorm:"type:text;not null"`
+	Name        string   `gorm:"type:varchar(100);not null"`
+	Type        PokeType `gorm:"many2many:pokemon_types;"`
+	Description string   `gorm:"type:text;not null"`
 	Height      float64
 	Weight      float64
 	HP          int
